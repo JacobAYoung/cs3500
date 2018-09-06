@@ -23,7 +23,7 @@ class Directory
 
     void setFolders(list<Folder> fFolder) {directoryContents[directoryPath].first = fFolder;}
     void setFiles(list<File> fFile) {directoryContents[directoryPath].second = fFile;}
-    void setDirectoryPath(string newDirectoryPath) {directoryPath = directoryPath+newDirectoryPath+'/';}
+    void setDirectoryPath(string newDirectoryPath) {directoryPath = newDirectoryPath+'/';}
 
     Directory() 
     {
@@ -48,7 +48,6 @@ class Directory
         list<File> files = this->getFiles();
 
         //Get the name of the folders
-        cout << folders.size() << endl;
         for ( Folder& folder : folders )
         {
             cout << folder.getFolderName() << ' ';
@@ -77,24 +76,32 @@ class Directory
         
         folders.push_back(Folder(folderName));
         this->setFolders(folders);
-        Directory dir(dPath);
 
     }
-    void moveToDirectory(string folderName)
+    void moveToDirectory(string dPath)
     {
         list<Folder> folders = this->getFolders();
+        string currentDirect = this->getDirectoryPath();
+        if (dPath == "..")
+        {   
+            if (currentDirect == "root/")
+            {
+                return;
+            }
+            string findNewPath = currentDirect.substr(0, currentDirect.rfind("/"));
+            findNewPath = findNewPath.substr(0, findNewPath.rfind("/"));
+            this->setDirectoryPath(findNewPath);
+            return;
+        }
         for ( Folder& folder : folders )
         {
-            if (folder.getFolderName() == folderName)
+            if (folder.getFolderName() == dPath)
             {
-                Directory dir(folderName);
+                setDirectoryPath(currentDirect+dPath);
                 return;
             }
         }
-        if (getDirectoryPath() != folderName)
-        {
-            cout << "This directory doesn't exist." << endl;
-        }
+        cout << "This directory doesn't exist." << endl;
     }
 };
 
