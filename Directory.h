@@ -35,12 +35,6 @@ class Directory
         File file("Test.txt");
         directoryContents[directoryPath].second.push_back(file);
     }
-    Directory(string dPath) 
-    {
-        setDirectoryPath(dPath); 
-        File file("Test.txt");
-        directoryContents[getDirectoryPath()].second.push_back(file);
-    }
     void displayDirectoryContents()
     {
         // Get files and folders from directory
@@ -62,7 +56,34 @@ class Directory
             cout << endl;
         }
     }
-    void createFolderAndDirectory(string folderName, string dPath)
+    void displayAllDirectoryContents()
+    {
+        // Get files and folders from directory
+        list<Folder> folders = this->getFolders();
+        list<File> files = this->getFiles();
+
+        //Get the name of the folders
+        for ( Folder& folder : folders )
+        {
+            cout << folder.getFolderPermissions() << ' ';
+            cout << folder.getFolderName() << ' ';
+            cout << folder.getFolderTime();
+            
+        }
+        //Get the name of the files
+        for ( File& file : files )
+        {
+            cout << file.getFilePermissions() << ' ';
+            cout << file.getFileName() << ' ';
+            cout << file.getFileTime();
+            
+        }
+        if ((folders.size() + files.size()) != 0)
+        {
+            cout << endl;
+        }
+    }
+    void createFolderAndDirectory(string folderName)
     {
         list<Folder> folders = this->getFolders();
         for ( Folder& folder : folders )
@@ -73,7 +94,7 @@ class Directory
                 return;
             }
         }
-        
+        remove(folderName.begin(), folderName.end(), '/');
         folders.push_back(Folder(folderName));
         this->setFolders(folders);
 
@@ -102,6 +123,60 @@ class Directory
             }
         }
         cout << "This directory doesn't exist." << endl;
+    }
+    void removeDirectory(string dPath)
+    {
+        list<Folder> folders = this->getFolders();
+        string currentDirect = this->getDirectoryPath();
+        cout << dPath+'/' << endl;
+        directoryContents.erase(dPath);
+        cout << directoryContents.size() << endl;
+    }
+    void removeFile(string fName)
+    {
+        // Get files and folders from directory
+        list<Folder> folders = this->getFolders();
+        list<File> files = this->getFiles();
+        for (list<Folder>::iterator itr = folders.begin(); itr != folders.end(); ++itr)
+        {
+            if (fName == (*itr).getFolderName())
+                itr = folders.erase(itr);
+                this->setFolders(folders);
+                this->removeDirectory(fName);
+                return;
+        }
+        
+        for (list<File>::iterator itr = files.begin(); itr != files.end(); ++itr)
+        {
+            if (fName == (*itr).getFileName())
+                itr = files.erase(itr);
+                this->setFiles(files);
+                return;
+        } 
+        cout << "No such file or directory." << endl;
+    }
+    void ChangePermissions(string flag, string fName)
+    {
+        list<Folder> folders = this->getFolders();
+        list<File> files = this->getFiles();
+        for ( Folder& folder : folders )
+        {
+            if (folder.getFolderName() == fName)
+            {
+                folder.setFolderPermissions(flag);
+                this->setFolders(folders);
+                return;
+            }
+        }
+        for ( File& file : files )
+        {
+            if (file.getFileName() == fName)
+            {
+                file.setFilePermissions(flag);
+                this->setFiles(files);
+                return;
+            }
+        }
     }
 };
 
