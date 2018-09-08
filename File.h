@@ -30,12 +30,10 @@ class File
         fileName = fName;
         time_t now = time(NULL);
         fileTime = ctime(&now);
-        cout << "set file permissions" << endl;
         setFilePermissions("644");
     }
     void setFilePermissions(string Flag) 
     {
-        cout << Flag.size() << endl;
         if (Flag.length() == 3)
         { 
             for (int i = 0; i < Flag.length(); i++)
@@ -43,31 +41,28 @@ class File
                 switch (Flag[i] - 48)
                 {
                     case 0:
-                        this->permissions[i].insert(i, "---");
+                        this->permissions[i] = ("---");
                         break;
                     case 1:
-                        this->permissions[i].insert(i, "--x");
+                        this->permissions[i] = ("--x");
                         break;
                     case 2:
-                        this->permissions[i].insert(i, "-w-");
+                        this->permissions[i] = ("-w-");
                         break;
                     case 3:
-                        this->permissions[i].insert(i, "-wx");
+                        this->permissions[i] = ("-wx");
                         break;
                     case 4:
-                        cout << "file4" << endl;
                         this->permissions[i] = ("r--");
-                        cout << "file4" << endl;
                         break;
                     case 5:
                         this->permissions[i] = ("r-x");
                         break;
                     case 6:
-                        cout << "file6" << endl;
                         this->permissions[i] = ("rw-");
                         break;
                     case 7:
-                        this->permissions[i].insert(i, "rwx");
+                        this->permissions[i] = ("rwx");
                         break;
                 }
             }

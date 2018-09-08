@@ -16,7 +16,7 @@ int main()
   while (quit == false)
   {
     string currentDirectory = directory.getDirectoryPath();
-    cout << currentDirectory << endl;
+    cout << currentDirectory << " ";
     flag = "";
     file = "";
     getline(cin, command);
@@ -39,11 +39,11 @@ int main()
     }
     if (command == "mkdir")
     {
-      directory.createFolderAndDirectory(flag);
+      directory.createFolderDirectory(flag);
     }
     if (command == "rmdir")
     {
-      directory.removeFile(flag);
+      directory.removeDirectory(flag);
     }
     if (command == "rm")
     {
@@ -55,7 +55,15 @@ int main()
     }
     if (command == "chmod")
     {
-      directory.ChangePermissions(flag, file);
+      directory.changePermissions(flag, file);
+    }
+    if (command == "touch")
+    {
+      directory.createFile(flag);
+    }
+    if (command == "pwd")
+    {
+      cout << directory.getDirectoryPath() << endl;
     }
   }
   
