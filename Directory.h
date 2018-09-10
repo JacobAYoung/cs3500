@@ -40,6 +40,7 @@ class Directory
     list<File> getFiles() {return directoryContents[directoryPath].second;}
     string getDirectoryPath() {return directoryPath;}
 
+    //Setters
     void setFolders(list<Folder> fFolder) {directoryContents[directoryPath].first = fFolder;}
     void setFiles(list<File> fFile) {directoryContents[directoryPath].second = fFile;}
     void setDirectoryPath(string newDirectoryPath) {directoryPath = newDirectoryPath+'/';}
