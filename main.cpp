@@ -32,9 +32,7 @@ int main()
       */
       quit = true;
       continue;
-    }
-    if (command == "ls")
-    {
+    } else if (command == "ls") {
       /* 
       Description: Lists out all of the contents of the directory
       Example: ls <optionalflag>>
@@ -48,68 +46,89 @@ int main()
         directory.displayDirectoryContents();
       }
       
-    }
-    if (command == "mkdir")
-    {
+    } else if (command == "mkdir") {
       /* 
       Description: Creates a new folder/directory
       Example: mkdir <foldername>
                mkdir folder1
       */
-      directory.createFolderDirectory(flag);
-    }
-    if (command == "rmdir")
-    {
+      if (flag != "" and flag != " " and flag.length() != 0)
+      {
+        directory.createFolderDirectory(flag);
+      } else {
+        cout << "Error creating folder." << endl;
+      }
+    } else if (command == "rmdir") {
       /* 
       Description: Removes a folder/directory
       Example: rmdir <foldername>
                rmdir folder1
       */
-      directory.removeDirectory(flag);
-    }
-    if (command == "rm")
-    {
+      if (flag != "" and flag != " " and flag.length() != 0)
+      {
+        directory.removeDirectory(flag);
+      } else {
+        cout << "Error removing directory." << endl;
+      }
+    } else if (command == "rm") {
       /* 
       Description: Removes a file from the directory.
       Example: rm <filename>
                rm example.txt
       */
-      directory.removeFile(flag);
-    }
-    if (command == "cd")
-    {
+      if (flag != "" and flag != " " and flag.length() != 0)
+      {
+        directory.removeFile(flag);
+      } else {
+        cout << "Error removing file." << endl;
+      }
+    } else if (command == "cd") {
       /* 
       Description: Moves from a directory to another directory
       Example: cd <foldername>
                cd folder1
       */
-      directory.moveToDirectory(flag);
-    }
-    if (command == "chmod")
-    {
+      if (flag != "" and flag != " " and flag.length() != 0)
+      {
+        directory.moveToDirectory(flag);
+      } else {
+        cout << "Error moving to directory." << endl;
+      }
+    } else if (command == "chmod") {
       /* 
       Description: Changes the permissions of a file/folder
       Example: chmod <permissions set> <filename>
                chmod 644 file.txt
       */
-      directory.changePermissions(flag, file);
-    }
-    if (command == "touch")
-    {
+      if (flag != "" and flag != " " and flag.length() != 0 and file.length() != 0 and file != "" and file != " ")
+      {
+        directory.changePermissions(flag, file);
+      } else {
+        cout << "Error changing permissions." << endl;
+      }
+    } else if (command == "touch") {
       /* 
       Description: Creates a new file or updates the file time
       Example: touch <filename>
                touch example.txt
       */
-      directory.createFile(flag);
-    }
-    if (command == "pwd")
-    {
+      if (flag != "" and flag != " " and flag.length() != 0)
+      {
+        cout << flag.length() << endl;
+        cout << flag << endl;
+        directory.createFile(flag);
+      } else {
+        cout << "Error creating file." << endl;
+      }
+      
+    } else if (command == "pwd") {
       /* 
       Description: Spits out the current directory
       Example: pwd
       */
       cout << directory.getDirectoryPath() << endl;
+    } else {
+      cout << "Not a valid command." << endl;
     }
   }
   

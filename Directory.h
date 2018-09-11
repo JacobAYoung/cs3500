@@ -35,6 +35,7 @@ class Directory
         directoryContents[directoryPath].first.push_back(folder2);
         File file("Test.txt");
         directoryContents[directoryPath].second.push_back(file);
+        
     }
     list<Folder> getFolders() {return directoryContents[directoryPath].first;}
     list<File> getFiles() {return directoryContents[directoryPath].second;}

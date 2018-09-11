@@ -6,6 +6,15 @@ void Folder::setFolderPermissions(string Flag)
         { 
             for (int i = 0; i < Flag.length(); i++)
             {
+                int flagNumber = Flag[i] - 48;
+                if (flagNumber < 0 or flagNumber > 7)
+                {
+                    cout << "Error setting permissions." << endl;
+                    return;
+                }
+            }
+            for (int i = 0; i < Flag.length(); i++)
+            {
                 switch (Flag[i] - 48)
                 {
                     case 0:

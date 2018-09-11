@@ -161,7 +161,6 @@ void Directory::removeFile(string fName)
     {
         if (fName == (*itr).getFileName())
         {
-            cout << "Found it" << endl;
             itr = files.erase(itr);
             this->setFiles(files);
             return;
@@ -192,4 +191,5 @@ void Directory::changePermissions(string flag, string fName)
             return;
         }
     }
+    cout << "Could not find file." << endl;
 }
