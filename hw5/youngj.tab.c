@@ -85,7 +85,7 @@ stack<string> rel;
 bool isIntCompatible(const int theType);
 bool isStrCompatible(const int theType);
 bool isIntOrStrCompatible(const int theType);
-void copyTypeInfo(TYPE_INFO& target, TYPE_INFO& source);
+void saveInfo(TYPE_INFO& target, TYPE_INFO& source);
 
 void beginScope();
 void endScope();
@@ -496,9 +496,9 @@ static const yytype_uint16 yyrline[] =
 {
        0,    92,    92,   118,   123,   135,   141,   149,   156,   162,
      169,   175,   180,   186,   192,   198,   205,   219,   377,   390,
-     400,   403,   417,   424,   430,   435,   442,   447,   452,   458,
-     463,   468,   473,   479,   484,   490,   495,   500,   505,   511,
-     515,   520
+     400,   403,   417,   431,   437,   442,   448,   453,   458,   464,
+     469,   474,   479,   485,   490,   496,   501,   506,   511,   517,
+     521,   526
 };
 #endif
 
@@ -1343,7 +1343,7 @@ yyreduce:
 #line 119 "youngj.y" /* yacc.c:1646  */
     {
 				printRule("EXPR", "CONST");
-				copyTypeInfo((yyval.typeInfo),(yyvsp[0].typeInfo));
+				saveInfo((yyval.typeInfo),(yyvsp[0].typeInfo));
 			}
 #line 1349 "youngj.tab.c" /* yacc.c:1646  */
     break;
@@ -1359,7 +1359,7 @@ yyreduce:
 					  yyerror("Undefined identifier");
 					  return(0);
 					}
-					(yyval.typeInfo).type = exprTypeInfo.type; 
+					saveInfo((yyval.typeInfo),exprTypeInfo); 
 			}
 #line 1365 "youngj.tab.c" /* yacc.c:1646  */
     break;
@@ -1368,7 +1368,7 @@ yyreduce:
 #line 136 "youngj.y" /* yacc.c:1646  */
     {
 				printRule("EXPR", "( PARENTHESIZED_EXPR )");
-				copyTypeInfo((yyval.typeInfo),(yyvsp[-1].typeInfo));
+				saveInfo((yyval.typeInfo),(yyvsp[-1].typeInfo));
 			}
 #line 1374 "youngj.tab.c" /* yacc.c:1646  */
     break;
@@ -1421,7 +1421,7 @@ yyreduce:
     {
 					printRule("PARENTHESIZED_EXPR",
                                 "ARITHLOGIC_EXPR");
-					copyTypeInfo((yyval.typeInfo),(yyvsp[0].typeInfo));
+					saveInfo((yyval.typeInfo),(yyvsp[0].typeInfo));
 				}
 #line 1427 "youngj.tab.c" /* yacc.c:1646  */
     break;
@@ -1430,7 +1430,7 @@ yyreduce:
 #line 176 "youngj.y" /* yacc.c:1646  */
     {
 					printRule("PARENTHESIZED_EXPR", "IF_EXPR");
-					copyTypeInfo((yyval.typeInfo), (yyvsp[0].typeInfo));
+					saveInfo((yyval.typeInfo), (yyvsp[0].typeInfo));
 				}
 #line 1436 "youngj.tab.c" /* yacc.c:1646  */
     break;
@@ -1440,7 +1440,7 @@ yyreduce:
     {
 					printRule("PARENTHESIZED_EXPR", 
                                 "LET_EXPR");
-					copyTypeInfo((yyval.typeInfo), (yyvsp[0].typeInfo));
+					saveInfo((yyval.typeInfo), (yyvsp[0].typeInfo));
 				}
 #line 1446 "youngj.tab.c" /* yacc.c:1646  */
     break;
@@ -1450,7 +1450,7 @@ yyreduce:
     {
 					printRule("PARENTHESIZED_EXPR", 
 					    "PRINT_EXPR");
-					copyTypeInfo((yyval.typeInfo), (yyvsp[0].typeInfo));
+					saveInfo((yyval.typeInfo), (yyvsp[0].typeInfo));
 				}
 #line 1456 "youngj.tab.c" /* yacc.c:1646  */
     break;
@@ -1460,7 +1460,7 @@ yyreduce:
     {
 					printRule("PARENTHESIZED_EXPR",
 					    "INPUT_EXPR");
-					copyTypeInfo((yyval.typeInfo), (yyvsp[0].typeInfo));
+					saveInfo((yyval.typeInfo), (yyvsp[0].typeInfo));
 				}
 #line 1466 "youngj.tab.c" /* yacc.c:1646  */
     break;
@@ -1470,7 +1470,7 @@ yyreduce:
     {
 					printRule("PARENTHESIZED_EXPR",
 				          "EXPR_LIST");
-					copyTypeInfo((yyval.typeInfo), (yyvsp[0].typeInfo));
+					saveInfo((yyval.typeInfo), (yyvsp[0].typeInfo));
 				}
 #line 1476 "youngj.tab.c" /* yacc.c:1646  */
     break;
@@ -1660,11 +1660,11 @@ yyreduce:
 				printRule("IF_EXPR", "if EXPR EXPR EXPR");
                 if((yyvsp[-2].typeInfo).bval == true)
 				{
-					copyTypeInfo((yyval.typeInfo), (yyvsp[-1].typeInfo));
+					saveInfo((yyval.typeInfo), (yyvsp[-1].typeInfo));
 				}
 				else
 				{
-					copyTypeInfo((yyval.typeInfo), (yyvsp[0].typeInfo));
+					saveInfo((yyval.typeInfo), (yyvsp[0].typeInfo));
 				}
 			}
 #line 1671 "youngj.tab.c" /* yacc.c:1646  */
@@ -1676,7 +1676,7 @@ yyreduce:
 				printRule("LET_EXPR", 
 				    "let* ( ID_EXPR_LIST ) EXPR");
 				endScope();
-                copyTypeInfo((yyval.typeInfo),(yyvsp[0].typeInfo));
+                saveInfo((yyval.typeInfo),(yyvsp[0].typeInfo));
 			}
 #line 1682 "youngj.tab.c" /* yacc.c:1646  */
     break;
@@ -1709,185 +1709,191 @@ yyreduce:
   case 22:
 #line 418 "youngj.y" /* yacc.c:1646  */
     {
+				saveInfo((yyval.typeInfo), (yyvsp[0].typeInfo));
 				printRule("PRINT_EXPR", "print EXPR");
-				copyTypeInfo((yyval.typeInfo), (yyvsp[0].typeInfo));
-				printf("%d\n", (yyvsp[0].typeInfo).nval);
+				if((yyvsp[0].typeInfo).type == INT)
+				{
+					printf("%d\n", (yyvsp[0].typeInfo).nval);
+				}
+				else if ((yyvsp[0].typeInfo).type == STR)
+				{
+					printf("%s\n", (yyvsp[0].typeInfo).sval);
+				}
 			}
-#line 1717 "youngj.tab.c" /* yacc.c:1646  */
+#line 1724 "youngj.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 425 "youngj.y" /* yacc.c:1646  */
+#line 432 "youngj.y" /* yacc.c:1646  */
     {
 				printRule("INPUT_EXPR", "input");
 				(yyval.typeInfo).type = INT_OR_STR;
 			}
-#line 1726 "youngj.tab.c" /* yacc.c:1646  */
+#line 1733 "youngj.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 431 "youngj.y" /* yacc.c:1646  */
+#line 438 "youngj.y" /* yacc.c:1646  */
     {
+				saveInfo((yyval.typeInfo), (yyvsp[0].typeInfo));
 				printRule("EXPR_LIST", "EXPR EXPR_LIST");
-                copyTypeInfo((yyval.typeInfo), (yyvsp[0].typeInfo));
 			}
-#line 1735 "youngj.tab.c" /* yacc.c:1646  */
+#line 1742 "youngj.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 436 "youngj.y" /* yacc.c:1646  */
+#line 443 "youngj.y" /* yacc.c:1646  */
     {
+				saveInfo((yyval.typeInfo), (yyvsp[0].typeInfo));
 				printRule("EXPR_LIST", "EXPR");
-                copyTypeInfo((yyval.typeInfo), (yyvsp[0].typeInfo));
-
 			}
-#line 1745 "youngj.tab.c" /* yacc.c:1646  */
+#line 1751 "youngj.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 443 "youngj.y" /* yacc.c:1646  */
+#line 449 "youngj.y" /* yacc.c:1646  */
     {
 				printRule("BIN_OP", "ARITH_OP");
 				(yyval.num) = ARITHMETIC_OP;
 			}
-#line 1754 "youngj.tab.c" /* yacc.c:1646  */
+#line 1760 "youngj.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 448 "youngj.y" /* yacc.c:1646  */
+#line 454 "youngj.y" /* yacc.c:1646  */
     {
 				printRule("BIN_OP", "LOG_OP");
 				(yyval.num) = LOGICAL_OP;
 			}
-#line 1763 "youngj.tab.c" /* yacc.c:1646  */
+#line 1769 "youngj.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 453 "youngj.y" /* yacc.c:1646  */
+#line 459 "youngj.y" /* yacc.c:1646  */
     {
 				printRule("BIN_OP", "REL_OP");
 				(yyval.num) = RELATIONAL_OP;
 			}
-#line 1772 "youngj.tab.c" /* yacc.c:1646  */
+#line 1778 "youngj.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 459 "youngj.y" /* yacc.c:1646  */
+#line 465 "youngj.y" /* yacc.c:1646  */
     {
 				printRule("ARITH_OP", "+");
 				arith.push('+');
 			}
-#line 1781 "youngj.tab.c" /* yacc.c:1646  */
+#line 1787 "youngj.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 464 "youngj.y" /* yacc.c:1646  */
+#line 470 "youngj.y" /* yacc.c:1646  */
     {
 				printRule("ARITH_OP", "-");
 				arith.push('-');
 			}
-#line 1790 "youngj.tab.c" /* yacc.c:1646  */
+#line 1796 "youngj.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 469 "youngj.y" /* yacc.c:1646  */
+#line 475 "youngj.y" /* yacc.c:1646  */
     {
 				printRule("ARITH_OP", "*");
 				arith.push('*');
 			}
-#line 1799 "youngj.tab.c" /* yacc.c:1646  */
+#line 1805 "youngj.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 474 "youngj.y" /* yacc.c:1646  */
+#line 480 "youngj.y" /* yacc.c:1646  */
     {
 				printRule("ARITH_OP", "/");
 				arith.push('/');
 			}
-#line 1808 "youngj.tab.c" /* yacc.c:1646  */
+#line 1814 "youngj.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 480 "youngj.y" /* yacc.c:1646  */
+#line 486 "youngj.y" /* yacc.c:1646  */
     {
 				printRule("REL_OP", "<");
 				rel.push("<");
 			}
-#line 1817 "youngj.tab.c" /* yacc.c:1646  */
+#line 1823 "youngj.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 485 "youngj.y" /* yacc.c:1646  */
+#line 491 "youngj.y" /* yacc.c:1646  */
     {
 				printRule("REL_OP", ">");
 				rel.push(">");
 			}
-#line 1826 "youngj.tab.c" /* yacc.c:1646  */
+#line 1832 "youngj.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 491 "youngj.y" /* yacc.c:1646  */
+#line 497 "youngj.y" /* yacc.c:1646  */
     {
 				printRule("REL_OP", "<=");
 				rel.push("<=");
 			}
-#line 1835 "youngj.tab.c" /* yacc.c:1646  */
+#line 1841 "youngj.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 496 "youngj.y" /* yacc.c:1646  */
+#line 502 "youngj.y" /* yacc.c:1646  */
     {
 				printRule("REL_OP", ">=");
 				rel.push(">=");
 			}
-#line 1844 "youngj.tab.c" /* yacc.c:1646  */
+#line 1850 "youngj.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 501 "youngj.y" /* yacc.c:1646  */
+#line 507 "youngj.y" /* yacc.c:1646  */
     {
 				printRule("REL_OP", "=");
 				rel.push("=");
 			}
-#line 1853 "youngj.tab.c" /* yacc.c:1646  */
+#line 1859 "youngj.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 506 "youngj.y" /* yacc.c:1646  */
+#line 512 "youngj.y" /* yacc.c:1646  */
     {
 				printRule("REL_OP", "/=");
 				rel.push("/=");
 			}
-#line 1862 "youngj.tab.c" /* yacc.c:1646  */
+#line 1868 "youngj.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 512 "youngj.y" /* yacc.c:1646  */
+#line 518 "youngj.y" /* yacc.c:1646  */
     {
 				printRule("LOG_OP", "and");
 			}
-#line 1870 "youngj.tab.c" /* yacc.c:1646  */
+#line 1876 "youngj.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 516 "youngj.y" /* yacc.c:1646  */
+#line 522 "youngj.y" /* yacc.c:1646  */
     {
 				printRule("LOG_OP", "or");
 			}
-#line 1878 "youngj.tab.c" /* yacc.c:1646  */
+#line 1884 "youngj.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 521 "youngj.y" /* yacc.c:1646  */
+#line 527 "youngj.y" /* yacc.c:1646  */
     {
 				printRule("UN_OP", "not");
 
 			}
-#line 1887 "youngj.tab.c" /* yacc.c:1646  */
+#line 1893 "youngj.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1891 "youngj.tab.c" /* yacc.c:1646  */
+#line 1897 "youngj.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2115,7 +2121,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 526 "youngj.y" /* yacc.c:1906  */
+#line 532 "youngj.y" /* yacc.c:1906  */
 
 
 #include "lex.yy.c"
@@ -2172,11 +2178,11 @@ TYPE_INFO findEntryInAnyScope(const string theName)
   }
 }
 
-void copyTypeInfo(TYPE_INFO& target, TYPE_INFO& source){
-	target.type = source.type;
-	target.sval = source.sval;
+void saveInfo(TYPE_INFO& target, TYPE_INFO& source){
 	target.nval = source.nval;
+	target.sval = source.sval;
 	target.bval = source.bval;
+	target.type = source.type;
 }
 
 void cleanUp() 

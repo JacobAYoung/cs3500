@@ -706,7 +706,7 @@ YY_DECL
 		}
 
 	{
-#line 38 "youngj.l"
+#line 36 "youngj.l"
 
 
 #line 713 "lex.yy.c"
@@ -768,7 +768,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 40 "youngj.l"
+#line 38 "youngj.l"
 {
 			printf("TOKEN: LPAREN    LEXEME: %s\n", yytext);
 			return T_LPAREN;
@@ -776,7 +776,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 44 "youngj.l"
+#line 42 "youngj.l"
 {
 			printf("TOKEN: RPAREN    LEXEME: %s\n", yytext);
 			return T_RPAREN;
@@ -784,7 +784,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 48 "youngj.l"
+#line 46 "youngj.l"
 {
 			printf("TOKEN: ADD       LEXEME: %s\n", yytext);
 			return T_ADD;
@@ -792,7 +792,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 52 "youngj.l"
+#line 50 "youngj.l"
 {
 			printf("TOKEN: SUB       LEXEME: %s\n", yytext);
 			return T_SUB;
@@ -800,7 +800,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 56 "youngj.l"
+#line 54 "youngj.l"
 {
 			printf("TOKEN: MULT      LEXEME: %s\n", yytext);
 			return T_MULT;
@@ -808,7 +808,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 60 "youngj.l"
+#line 58 "youngj.l"
 {
 			printf("TOKEN: DIV       LEXEME: %s\n", yytext);
 			return T_DIV;
@@ -816,7 +816,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 64 "youngj.l"
+#line 62 "youngj.l"
 {
 			printf("TOKEN: GT        LEXEME: %s\n", yytext);
 			return T_GT;
@@ -824,7 +824,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 68 "youngj.l"
+#line 66 "youngj.l"
 {
 			printf("TOKEN: GE        LEXEME: %s\n", yytext);
 			return T_GE;
@@ -832,7 +832,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 72 "youngj.l"
+#line 70 "youngj.l"
 {
 			printf("TOKEN: LT        LEXEME: %s\n", yytext);
 			return T_LT;
@@ -840,7 +840,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 76 "youngj.l"
+#line 74 "youngj.l"
 {
 			printf("TOKEN: LE        LEXEME: %s\n", yytext);
 			return T_LE;
@@ -848,7 +848,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 80 "youngj.l"
+#line 78 "youngj.l"
 {
 			printf("TOKEN: EQ        LEXEME: %s\n", yytext);
 			return T_EQ;
@@ -856,7 +856,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 84 "youngj.l"
+#line 82 "youngj.l"
 {
 			printf("TOKEN: NE        LEXEME: %s\n", yytext);
 			return T_NE;
@@ -864,7 +864,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 88 "youngj.l"
+#line 86 "youngj.l"
 {
 			printf("TOKEN: LETSTAR   LEXEME: %s\n", yytext);
 			beginScope();
@@ -873,7 +873,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 93 "youngj.l"
+#line 91 "youngj.l"
 {
 			printf("TOKEN: IF        LEXEME: %s\n", yytext);
 			return T_IF;
@@ -881,7 +881,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 97 "youngj.l"
+#line 95 "youngj.l"
 {
 			printf("TOKEN: PRINT     LEXEME: %s\n", yytext);
 			return T_PRINT;
@@ -889,7 +889,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 101 "youngj.l"
+#line 99 "youngj.l"
 {
 			printf("TOKEN: INPUT     LEXEME: %s\n", yytext);
 			return T_INPUT;
@@ -897,7 +897,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 105 "youngj.l"
+#line 103 "youngj.l"
 {
 			printf("TOKEN: T         LEXEME: %s\n", yytext);
 			return T_T;
@@ -905,7 +905,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 109 "youngj.l"
+#line 107 "youngj.l"
 {
 			printf("TOKEN: NIL       LEXEME: %s\n", yytext);
 			return T_NIL;
@@ -913,7 +913,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 113 "youngj.l"
+#line 111 "youngj.l"
 {
 			printf("TOKEN: AND       LEXEME: %s\n", yytext);
 			return T_AND;
@@ -921,7 +921,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 117 "youngj.l"
+#line 115 "youngj.l"
 {
 			printf("TOKEN: OR        LEXEME: %s\n", yytext);
 			return T_OR;
@@ -929,7 +929,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 121 "youngj.l"
+#line 119 "youngj.l"
 {
 			printf("TOKEN: NOT       LEXEME: %s\n", yytext);
 			return T_NOT;
@@ -937,7 +937,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 125 "youngj.l"
+#line 123 "youngj.l"
 {
 			printf("TOKEN: INTCONST  LEXEME: %s\n", yytext);
 			yylval.typeInfo.nval = atoi(yytext); 
@@ -946,7 +946,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 130 "youngj.l"
+#line 128 "youngj.l"
 {
 			printf("TOKEN: STRCONST  LEXEME: %s\n", yytext);
 			yylval.typeInfo.sval = strdup(yytext);
@@ -955,7 +955,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 135 "youngj.l"
+#line 133 "youngj.l"
 {
 			printf("TOKEN: IDENT     LEXEME: %s\n", yytext);
 			yylval.text = strdup(yytext);
@@ -964,13 +964,13 @@ YY_RULE_SETUP
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 140 "youngj.l"
+#line 138 "youngj.l"
 { }
 	YY_BREAK
 case 26:
 /* rule 26 can match eol */
 YY_RULE_SETUP
-#line 141 "youngj.l"
+#line 139 "youngj.l"
 {
                  lineNum++;
                 }
@@ -980,12 +980,12 @@ case 27:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 144 "youngj.l"
+#line 142 "youngj.l"
 { }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 145 "youngj.l"
+#line 143 "youngj.l"
 {
 			printf("TOKEN: UNKNOWN   LEXEME: %s\n",
 			       yytext);
@@ -994,7 +994,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 151 "youngj.l"
+#line 149 "youngj.l"
 ECHO;
 	YY_BREAK
 #line 1001 "lex.yy.c"
@@ -2002,6 +2002,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 151 "youngj.l"
+#line 149 "youngj.l"
 
 

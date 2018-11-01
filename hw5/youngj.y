@@ -36,7 +36,7 @@ stack<string> rel;
 bool isIntCompatible(const int theType);
 bool isStrCompatible(const int theType);
 bool isIntOrStrCompatible(const int theType);
-void copyTypeInfo(TYPE_INFO& target, TYPE_INFO& source);
+void saveInfo(TYPE_INFO& target, TYPE_INFO& source);
 
 void beginScope();
 void endScope();
@@ -118,7 +118,7 @@ N_START		: N_EXPR
 N_EXPR		: N_CONST
 			{
 				printRule("EXPR", "CONST");
-				copyTypeInfo($$,$1);
+				saveInfo($$,$1);
 			}
             | T_IDENT
             {
@@ -130,12 +130,12 @@ N_EXPR		: N_CONST
 					  yyerror("Undefined identifier");
 					  return(0);
 					}
-					$$.type = exprTypeInfo.type; 
+					saveInfo($$,exprTypeInfo); 
 			}
 			| T_LPAREN N_PARENTHESIZED_EXPR T_RPAREN
 			{
 				printRule("EXPR", "( PARENTHESIZED_EXPR )");
-				copyTypeInfo($$,$2);
+				saveInfo($$,$2);
 			}
 			;
 N_CONST		: T_INTCONST
@@ -170,36 +170,36 @@ N_PARENTHESIZED_EXPR	: N_ARITHLOGIC_EXPR
 				{
 					printRule("PARENTHESIZED_EXPR",
                                 "ARITHLOGIC_EXPR");
-					copyTypeInfo($$,$1);
+					saveInfo($$,$1);
 				}
                 | N_IF_EXPR 
 				{
 					printRule("PARENTHESIZED_EXPR", "IF_EXPR");
-					copyTypeInfo($$, $1);
+					saveInfo($$, $1);
 				}
                 | N_LET_EXPR 
 				{
 					printRule("PARENTHESIZED_EXPR", 
                                 "LET_EXPR");
-					copyTypeInfo($$, $1);
+					saveInfo($$, $1);
 				}
                 | N_PRINT_EXPR 
 				{
 					printRule("PARENTHESIZED_EXPR", 
 					    "PRINT_EXPR");
-					copyTypeInfo($$, $1);
+					saveInfo($$, $1);
 				}
                 | N_INPUT_EXPR 
 				{
 					printRule("PARENTHESIZED_EXPR",
 					    "INPUT_EXPR");
-					copyTypeInfo($$, $1);
+					saveInfo($$, $1);
 				}
                 | N_EXPR_LIST 
 				{
 					printRule("PARENTHESIZED_EXPR",
 				          "EXPR_LIST");
-					copyTypeInfo($$, $1);
+					saveInfo($$, $1);
 				}
 				;
 N_ARITHLOGIC_EXPR	: N_UN_OP N_EXPR
@@ -379,11 +379,11 @@ N_IF_EXPR    	: T_IF N_EXPR N_EXPR N_EXPR
 				printRule("IF_EXPR", "if EXPR EXPR EXPR");
                 if($2.bval == true)
 				{
-					copyTypeInfo($$, $3);
+					saveInfo($$, $3);
 				}
 				else
 				{
-					copyTypeInfo($$, $4);
+					saveInfo($$, $4);
 				}
 			}
 			;
@@ -393,7 +393,7 @@ N_LET_EXPR      : T_LETSTAR T_LPAREN N_ID_EXPR_LIST T_RPAREN
 				printRule("LET_EXPR", 
 				    "let* ( ID_EXPR_LIST ) EXPR");
 				endScope();
-                copyTypeInfo($$,$5);
+                saveInfo($$,$5);
 			}
 			;
 N_ID_EXPR_LIST  : /* epsilon */
@@ -416,9 +416,16 @@ N_ID_EXPR_LIST  : /* epsilon */
 			;
 N_PRINT_EXPR    : T_PRINT N_EXPR
 			{
+				saveInfo($$, $2);
 				printRule("PRINT_EXPR", "print EXPR");
-				copyTypeInfo($$, $2);
-				printf("%d\n", $2.nval);
+				if($2.type == INT)
+				{
+					printf("%d\n", $2.nval);
+				}
+				else if ($2.type == STR)
+				{
+					printf("%s\n", $2.sval);
+				}
 			}
 			;
 N_INPUT_EXPR	: T_INPUT
@@ -429,14 +436,13 @@ N_INPUT_EXPR	: T_INPUT
 			;
 N_EXPR_LIST	: N_EXPR N_EXPR_LIST  
 			{
+				saveInfo($$, $2);
 				printRule("EXPR_LIST", "EXPR EXPR_LIST");
-                copyTypeInfo($$, $2);
 			}
             | N_EXPR
 			{
+				saveInfo($$, $1);
 				printRule("EXPR_LIST", "EXPR");
-                copyTypeInfo($$, $1);
-
 			}
 			;
 N_BIN_OP	: N_ARITH_OP
@@ -579,11 +585,11 @@ TYPE_INFO findEntryInAnyScope(const string theName)
   }
 }
 
-void copyTypeInfo(TYPE_INFO& target, TYPE_INFO& source){
-	target.type = source.type;
-	target.sval = source.sval;
+void saveInfo(TYPE_INFO& target, TYPE_INFO& source){
 	target.nval = source.nval;
+	target.sval = source.sval;
 	target.bval = source.bval;
+	target.type = source.type;
 }
 
 void cleanUp() 

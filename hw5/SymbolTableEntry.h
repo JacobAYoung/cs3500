@@ -35,29 +35,30 @@ private:
   TYPE_INFO typeInfo;
 
 public:
-  // Constructors
-  SYMBOL_TABLE_ENTRY( ) 
-  { 
-    name = ""; 
-    typeInfo.type = UNDEFINED; 
-  }
+	// Constructors
+	SYMBOL_TABLE_ENTRY( ) 
+	{ 
+		name = ""; 
+		typeInfo.type = UNDEFINED; 
+	}
 
-  SYMBOL_TABLE_ENTRY(const string theName,TYPE_INFO theType)
-  {
-    name = theName;
-    copyTypeInfo(typeInfo, theType);
-  }
+	SYMBOL_TABLE_ENTRY(const string theName, TYPE_INFO theType)
+	{
+		name = theName;
+		saveInfo(typeInfo, theType);
+	}
 
-  void copyTypeInfo(TYPE_INFO& target, TYPE_INFO& source){
-    target.type = source.type;
-    target.sval = source.sval;
-    target.nval = source.nval;
-    target.bval = source.bval;
-  }
+	void saveInfo(TYPE_INFO& target, TYPE_INFO& source)
+	{
+		target.nval = source.nval;
+		target.sval = source.sval;
+		target.bval = source.bval;
+		target.type = source.type;
+	}
   
-  // Accessors
-  string getName() const { return name; }
-  TYPE_INFO getTypeInfo() const { return typeInfo; }
+	// Accessors
+	string getName() const { return name; }
+	TYPE_INFO getTypeInfo() const { return typeInfo; }
 };
 
 #endif  // SYMBOL_TABLE_ENTRY_H

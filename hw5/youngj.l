@@ -11,8 +11,6 @@
  *	Definitions of regular expressions
 */
 
-stack<SYMBOL_TABLE> scopeStack2;
-
 WSPACE		[ \t\r]+
 NEWLINE          \n
 LO_ALPHA		[a-z]

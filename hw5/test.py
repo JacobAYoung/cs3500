@@ -3,10 +3,10 @@ import sys, os
 
 os.chdir('../hw5/input')
 for file_in_input in os.listdir():
-        if file_in_input == "bigLet.txt":
+        #if file_in_input == "letPrint.txt":
                 #print('------------- %s ---------------------'%(file_in_input))
-                os.system('../a.out %s > ../result/%s.out' % (file_in_input, file_in_input));
-                os.system('diff -c ../result/%s.out ../output/%s.out --ignore-space-change --ignore-case --ignore-blank-lines' % (file_in_input,file_in_input))
+	os.system('../a.out %s > ../result/%s.out' % (file_in_input, file_in_input));
+	os.system('diff -c ../result/%s.out ../output/%s.out --ignore-space-change --ignore-case --ignore-blank-lines' % (file_in_input,file_in_input))
 
 				#bigLet
 				#letPrint
