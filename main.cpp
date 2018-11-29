@@ -138,16 +138,17 @@ int main()
         memory.setTrace(content, 2);
         memory.firstFitAlgorithm(memory.getTrace(), trace, memory.getMemorySize(), memory.getTimeStep());
       } else {
-        cout << "Error loading file." << endl;
+        cout << "Error loading file." << endl; 
       }
     } else if (command == "memstep") {
       if (flag != "" and flag != " " and flag.length() != 0)
       {
+        vector<int> trace = memory.getTrace();
+        vector<int> traceMap = memory.getTraceMap();
         int timeStep = memory.getTimeStep();
         timeStep += stoi(flag);
         memory.setTimeStepNumber(timeStep);
-        memory.firstFitAlgorithm(memory.getTrace(), memory.getTraceMap(), memory.getMemorySize(), memory.getTimeStep());
-        memory.setLastTimeStep(timeStep);
+        memory.firstFitAlgorithm(trace, traceMap, memory.getMemorySize(), memory.getTimeStep());
       } else {
         cout << "Error" << endl;
       }

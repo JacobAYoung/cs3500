@@ -124,18 +124,21 @@ class Memory
         return fileContents;
     }
 
-    void cleanTraceMap(vector<int> traceMapData, int timeStep) {
+    int cleanTraceMap(vector<int> traceMapData, int timeStep) {
+        int found = 0;
         for (int i = 0; i < traceMapData.size(); i++) {
             if (traceMapData[i] == timeStep) {
                 traceMapData[i] = 0;
+                found++;
             }
         }
         setTraceMap(traceMapData);
+        return found;
     }
 
     void firstFitAlgorithm(vector<int> traceData, vector<int> traceMapData, int memSize, int timeStep) {
         int totalProcessMemSize = 0;
-        int timeStepCounter = 1;
+        int timeStepCounter = 0;
         int lastCounter = 0;
         int positionCounter = getTracePosition();
         int processBeginTime = 0;
@@ -149,21 +152,23 @@ class Memory
         int secondPosition = -1;
 
         cout << "Previous Time Step: " << getLastTimeStep() << endl;
-        cout << "Current Time Step: " << timeStep << endl;
-        
         if (timeStep == 0) {
             printTraceMap(traceMapData);
             return;
         }
 
-        while (timeStepCounter <= timeStep) {
-            if (positionCounter > traceData.size()) {
+        while (timeStepCounter < timeStep) {
+            if (positionCounter >= traceData.size()) {
+                setTimeStepNumber(getLastTimeStep());
+                cout << "Current Time Step5: " << getTimeStep() << endl;
                 cout << "There is not enough trace data to continue." << endl;
                 printTraceMap(traceMapData);
                 return;
             }
             //Clean out the old processes at the current timestep
-            cleanTraceMap(traceMapData, timeStepCounter);
+            int cleaned = cleanTraceMap(traceMapData, timeStepCounter+1);
+            totalProcessMemSize = totalProcessMemSize - cleaned;
+
             if (positionCounter > lastCounter) {
                 lastCounter+=3;
                 timeStepCounter++;
@@ -183,12 +188,15 @@ class Memory
 
             //Check if the memory size is greater then the allocated memory size
             if (tempMemSize > memSize) {
-                break;
+                //Trash the proceess and continue on
+                timeStepCounter++;
+                positionCounter+=3;
+                lastCounter+=3;
+                continue;
             } else {
                 totalProcessMemSize = tempMemSize;
                 totalTime = processBeginTime + processEndTime;
             }
-
             //Find the ideal locations for the trace map
             for (int i = 0; i < memSize; i++) {
                 if (processMemSize == consecutiveCounter) {
@@ -217,8 +225,11 @@ class Memory
             positionCounter+=3;
             lastCounter+=3;
         }
+        cout << "Current Time Step: " << timeStep << endl;
         setTracePosition(positionCounter);
+        setLastTimeStep(timeStep);
         printTraceMap(traceMapData);
+        
     }
     
 };
