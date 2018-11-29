@@ -3,6 +3,7 @@
 // #include <cstdlib>
 #include <sstream>
 #include "Directory.h"
+#include "Memory.h"
 
 using namespace std;
 
@@ -13,6 +14,7 @@ int main()
   string flag;
   string file;
   Directory directory;
+  Memory memory;
   while (quit == false)
   {
     string currentDirectory = directory.getDirectoryPath();
@@ -114,8 +116,6 @@ int main()
       */
       if (flag != "" and flag != " " and flag.length() != 0)
       {
-        cout << flag.length() << endl;
-        cout << flag << endl;
         directory.createFile(flag);
       } else {
         cout << "Error creating file." << endl;
@@ -127,6 +127,30 @@ int main()
       Example: pwd
       */
       cout << directory.getDirectoryPath() << endl;
+    } else if (command == "memload") {
+      if (flag != "" and flag != " " and flag.length() != 0)
+      {
+        vector<string> content = memory.loadFile(flag);
+        memory.setAllocationAlgorithm(content);
+        memory.setMemorySize(content);
+        memory.fillVector(memory.getMemorySize());
+        vector<int> trace = memory.getTraceMap();
+        memory.setTrace(content, 2);
+        memory.firstFitAlgorithm(memory.getTrace(), trace, memory.getMemorySize(), memory.getTimeStep());
+      } else {
+        cout << "Error loading file." << endl;
+      }
+    } else if (command == "memstep") {
+      if (flag != "" and flag != " " and flag.length() != 0)
+      {
+        int timeStep = memory.getTimeStep();
+        timeStep += stoi(flag);
+        memory.setTimeStepNumber(timeStep);
+        memory.firstFitAlgorithm(memory.getTrace(), memory.getTraceMap(), memory.getMemorySize(), memory.getTimeStep());
+        memory.setLastTimeStep(timeStep);
+      } else {
+        cout << "Error" << endl;
+      }
     } else {
       cout << "Not a valid command." << endl;
     }
